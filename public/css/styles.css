@@ -4,3 +4,93 @@
 *:after {
   box-sizing: border-box;
 }
+body {
+  margin: 0;
+}
+#wrapper {
+
+}
+#top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 5% 0;
+}
+.siteName a{
+  text-decoration: none;
+  color: black;
+  font-size: 2rem;
+}
+#tools a{
+  text-decoration: none;
+  color: black;
+}
+
+#top-nav ul{
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  flex-grow: inherit;
+  padding: 0;
+}
+#top-nav ul li {
+  flex-grow: 1;
+  padding: 1rem 0;
+  background-color: #242424;
+  text-align: center;
+  font-size: 1.2rem;
+  color: white;
+  
+}
+main {
+  
+}
+.car-info-card {
+  margin: 2rem;
+}
+#intro-card {
+
+}
+#review-card {
+
+}
+#upgrade-card {
+  
+}
+footer {
+}
+
+@media screen and (min-width: 600px) {
+  body {
+    background-image: url(/images/site/checkerboard.jpg);
+    background-position: 50%;
+    background-size: 400px 400px;
+    width: 80%;
+    max-width: 800px;
+    min-width: 600px;
+    margin: 1rem auto;
+  }
+  #wrapper {
+    border-radius: 5px;
+    border: 5px solid rgb(84, 204, 204);
+    background-color: white;
+  }
+  #top-header {
+    
+  }
+  .siteName a{
+    font-size: 2.5rem;
+  }
+  #tools a{
+    font-size: 1.5rem;
+  }
+
+  #top-nav ul {
+    margin: 2.5rem auto;
+    width: 95%;
+    min-width: 590px;
+  }
+  #top-nav ul li {
+    font-size: 1.5rem;
+  }
+}
