@@ -9,6 +9,7 @@ const express = require("express")
 expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
+const port = process.env.PORT
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
