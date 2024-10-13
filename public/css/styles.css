@@ -10,8 +10,9 @@
 h1, h2, h3 {
   font-family: 'Roboto Condensed', sans-serif;
 }
- 
+
 body {
+  text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
 #wrapper {
@@ -43,9 +44,15 @@ body {
 #top-nav ul li {
   flex-grow: 1;
   padding: 1rem 0;
-  background-color: #242424;
+  background-color: #222222;
   text-align: center;
   font-size: 1.2rem;
+}
+#top-nav ul li:hover {
+  background-color: #555555;
+}
+#top-nav ul li a {
+  text-decoration: none;
   color: white;
 }
 #card-grid {
