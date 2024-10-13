@@ -9,7 +9,6 @@ const express = require("express")
 expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
-const port = process.env.PORT
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
@@ -69,8 +68,8 @@ app.use(async (err, req, res, next) => {
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT
-const host = process.env.HOST
+const port = process.env.PORT || 10000
+const host = process.env.HOST || 'localhost'
 
 /* ***********************
  * Log statement to confirm server operation
