@@ -12,7 +12,6 @@ h1, h2, h3 {
 }
 
 body {
-  text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
 #wrapper {
@@ -121,6 +120,10 @@ body {
 #upgrade-card a {
   display: block;
   margin: auto;
+}
+#error {
+  display: block;
+  text-align: center;
 }
 footer {
   text-align: center;
