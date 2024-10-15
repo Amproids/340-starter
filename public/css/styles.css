@@ -12,6 +12,7 @@ h1, h2, h3 {
 }
 
 body {
+  margin: 0;
   font-family: 'Open Sans', sans-serif;
 }
 #wrapper {
@@ -125,6 +126,40 @@ body {
   display: block;
   text-align: center;
 }
+#car-cards ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 1rem;
+  padding: 0;
+  list-style-type: none;
+  justify-items: center;
+}
+#car-cards ul li{
+  position: relative;
+  margin: 1rem 0;
+  width: 240px;
+  height: 250px;
+  border: #222222 1px solid;
+  border-radius: 10px;
+  list-style-type: none;
+}
+#car-cards ul li img {
+  width: 100%;
+  height: auto;
+  border-radius: 9px 9px 0 0;
+}
+#car-cards ul li hr {
+  border-top: none;
+  width: 80%;
+}
+#car-cards ul li p{
+  position: absolute;
+  bottom: 5px;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
 footer {
   text-align: center;
 }
