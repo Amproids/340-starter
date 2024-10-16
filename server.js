@@ -26,6 +26,9 @@ app.set("layout", "./layouts/layout")
  *************************/
 app.use(static)
 
+//Error Route
+app.get("/trigger-error", utilities.handleErrors(baseController.triggerError))
+
 //Index Route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
@@ -49,12 +52,11 @@ app.use(async (err, req, res, next) => {
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
   if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
   res.render("errors/error", {
-    title: err.status || 'Server Error',
+    title: err.status || 500,
     message: err.message,
     nav
   })
 })
-
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
