@@ -159,6 +159,34 @@ body {
   width: 100%;
   text-align: center;
 }
+#car-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+#car-details h1 {
+  margin: 0 1rem 1rem;
+}
+#car-details img {
+  display: block; 
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.5);
+
+}
+#car-details hr{
+  width: 80%;
+}
+#car-details div {
+  padding: 1rem;
+}
+#car-details h2 {
+  margin: 2rem 0;
+}
+#car-details p {
+ margin-left: 0.5rem;
+}
 
 footer {
   text-align: center;
