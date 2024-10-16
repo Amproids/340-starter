@@ -32,6 +32,9 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 //Inventory Route
 app.get("/inv/type/:classificationId", utilities.handleErrors(baseController.buildInventory))
 
+//Car Details Route
+app.get("/inv/details/:inventoryId", utilities.handleErrors(baseController.buildCarDetails))
+
 //File Not Found Route - must be last route in list
 app.use(async(req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})

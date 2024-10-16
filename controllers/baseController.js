@@ -11,5 +11,12 @@ baseController.buildInventory = async function(req, res){
     const inv = await utilities.getInv(classificationId)
     res.render("inventory", {title: "Inventory", nav, inv})
 }
+baseController.buildCarDetails = async function(req, res){
+    const inventoryId = req.params.inventoryId  // Get classification ID from URL
+    const nav = await utilities.getNav()
+    const details = await utilities.getCarDetails(inventoryId)
+    console.log(details)
+    res.render("details", {title: "Details", nav, details})
+}
 
 module.exports = baseController

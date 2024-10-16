@@ -10,4 +10,7 @@ async function getClassifications(){
 async function getInventory(classificationId){
     return await pool.query(`SELECT * FROM public.inventory WHERE classification_id=${classificationId} ORDER BY inv_make`)
 }
-module.exports = {getClassifications, getInventory}
+async function getCarDetails(inventoryId){
+    return await pool.query(`SELECT * FROM public.inventory WHERE inv_id=${inventoryId}`)
+}
+module.exports = {getClassifications, getInventory, getCarDetails}
