@@ -25,10 +25,11 @@ Util.getNav = async function (req, res, next) {
 }
 Util.getInv = async function (classificationId, req, res, next) {
     let data = await invModel.getInventory(classificationId)
-    let inventoryHTML = `<ul>`
+    let classification = await invModel.getClassificationName(classificationId)
+    let inventoryHTML = `<h1>${classification.rows[0].classification_name}</h1><ul>`
     data.rows.forEach((row) => {
         inventoryHTML += `<li><a href='/inv/details/${row.inv_id}'>`
-        inventoryHTML += `<img src='${row.inv_thumbnail}' alt='${row.inv_description}'><br><hr>`
+        inventoryHTML += `<img src='${row.inv_thumbnail}' alt='${row.inv_year} ${row.inv_make} ${row.inv_model}'><br><hr>`
         inventoryHTML += `<p>${row.inv_make} ${row.inv_model}<br>`
         inventoryHTML += `$${formatNumber(row.inv_price)}</p>`
         inventoryHTML += '</a></li>' 
@@ -40,7 +41,7 @@ Util.getCarDetails = async function (inventoryId, req, res, next) {
     let data = await invModel.getCarDetails(inventoryId)
     let detailsHTML = `<div>`
     detailsHTML += `<h1>${data.rows[0].inv_year} ${data.rows[0].inv_make} ${data.rows[0].inv_model}</h1>`
-    detailsHTML += `<img src='${data.rows[0].inv_image}' alt='${data.rows[0].inv_description}'><br><hr></div>`
+    detailsHTML += `<img src='${data.rows[0].inv_image}' alt='Image of ${rows[0].inv_make} ${rows[0].inv_model}'><br><hr></div>`
     detailsHTML += `<div><h2>${data.rows[0].inv_make} ${data.rows[0].inv_model} Details</h2>`
     detailsHTML += `<p><b>Price:</b> $${formatNumber(data.rows[0].inv_price)}</p>`
     detailsHTML += `<p><b>Color:</b> ${data.rows[0].inv_color}</p>`

@@ -126,6 +126,9 @@ body {
   display: block;
   text-align: center;
 }
+#car-cards h1 {
+  margin-left: 2rem;
+}
 #car-cards ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -173,7 +176,6 @@ body {
   height: auto;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.5);
-
 }
 #car-details hr{
   width: 80%;
