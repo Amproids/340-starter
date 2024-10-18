@@ -2,10 +2,10 @@
 <%- messages() %>
 <form id="loginForm">
     <fieldset>
-        <label>Email:</label>
-        <input type="email" name="email">
-        <label>Password:</label>
-        <input type="password" name="password">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <label for="email">Password:</label>
+        <input type="password" name="password" id="password" required>
         <button type="submit">Login</button>
         <p>No account? </p><a href="/account/register">Sign-up</a>
     </fieldset>

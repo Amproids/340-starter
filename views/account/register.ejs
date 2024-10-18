@@ -1,0 +1,29 @@
+<h1><%- title %></h1>
+<%- messages() %>
+<form id="registrationForm" action="/account/register" method="post">
+    <fieldset>
+        <label for="firstName">First Name:</label>
+        <input type="text" name="firstName" id="firstName" required>
+              
+        <label for="lastName">Last Name:</label>
+        <input type="text" name="lastName" id="lastName" required>
+              
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+              
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+
+        <div class="password-requirements">
+            <p>Password must meet the following requirements:</p>
+            <ul>
+              <li>At least 12 characters long</li>
+              <li>Contains at least 1 capital letter</li>
+              <li>Contains at least 1 number</li>
+              <li>Contains at least 1 special character</li>
+            </ul>
+          </div>
+        <button type="submit">Sign-Up</button>
+        <p>Already have an account? <a href="/account/login">Login</a></p>
+    </fieldset>
+</form>

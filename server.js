@@ -15,6 +15,7 @@ const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require('./database/')
+const bodyParser = require("body-parser")
 
 /* ***********************
  * Middleware
@@ -29,6 +30,10 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+// for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //Express Message Middleware
 app.use(require('connect-flash')())
