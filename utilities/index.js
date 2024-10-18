@@ -39,14 +39,15 @@ Util.getInv = async function (classificationId, req, res, next) {
 }
 Util.getCarDetails = async function (inventoryId, req, res, next) {
     let data = await invModel.getCarDetails(inventoryId)
+    let row = data.rows[0]
     let detailsHTML = `<div>`
-    detailsHTML += `<h1>${data.rows[0].inv_year} ${data.rows[0].inv_make} ${data.rows[0].inv_model}</h1>`
-    detailsHTML += `<img src='${data.rows[0].inv_image}' alt='Image of ${rows[0].inv_make} ${rows[0].inv_model}'><br><hr></div>`
-    detailsHTML += `<div><h2>${data.rows[0].inv_make} ${data.rows[0].inv_model} Details</h2>`
-    detailsHTML += `<p><b>Price:</b> $${formatNumber(data.rows[0].inv_price)}</p>`
-    detailsHTML += `<p><b>Color:</b> ${data.rows[0].inv_color}</p>`
-    detailsHTML += `<p><b>Mileage:</b> ${formatNumber(data.rows[0].inv_miles)} miles</p>`
-    detailsHTML += `<p><b>Description:</b> ${data.rows[0].inv_description}</p></div>`
+    detailsHTML += `<h1>${row.inv_year} ${row.inv_make} ${row.inv_model}</h1>`
+    detailsHTML += `<img src='${row.inv_image}' alt='Image of ${row.inv_make} ${row.inv_model}'><br><hr></div>`
+    detailsHTML += `<div><h2>${row.inv_make} ${row.inv_model} Details</h2>`
+    detailsHTML += `<p><b>Price:</b> $${formatNumber(row.inv_price)}</p>`
+    detailsHTML += `<p><b>Color:</b> ${row.inv_color}</p>`
+    detailsHTML += `<p><b>Mileage:</b> ${formatNumber(row.inv_miles)} miles</p>`
+    detailsHTML += `<p><b>Description:</b> ${row.inv_description}</p></div>`
     return detailsHTML
 }
 
