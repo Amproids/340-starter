@@ -18,4 +18,7 @@ pnpm-lock.yaml
 # .DS_Store is only for Mac users
 **/.DS_Store
 
+#ignore flatten and tree, it's for local use only
+flatten-and-tree.py
+
 README.md
