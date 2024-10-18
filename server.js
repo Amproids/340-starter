@@ -10,8 +10,32 @@ expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const accountRoute = require("./routes/accountRoute")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
+const session = require("express-session")
+const pool = require('./database/')
+
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+//Express Message Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
 /* ***********************
  * View Engine and Templates
@@ -25,19 +49,16 @@ app.set("layout", "./layouts/layout")
  * Routes
  *************************/
 app.use(static)
-
 //Error Route
 app.get("/trigger-error", utilities.handleErrors(baseController.triggerError))
-
 //Index Route
 app.get("/", utilities.handleErrors(baseController.buildHome))
-
 //Inventory Route
 app.get("/inv/type/:classificationId", utilities.handleErrors(baseController.buildInventory))
-
 //Car Details Route
 app.get("/inv/details/:inventoryId", utilities.handleErrors(baseController.buildCarDetails))
-
+//My Account Route
+app.use('/account', accountRoute)
 //File Not Found Route - must be last route in list
 app.use(async(req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})

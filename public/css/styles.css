@@ -10,6 +10,9 @@
 h1, h2, h3 {
   font-family: 'Roboto Condensed', sans-serif;
 }
+h1 {
+  text-align: center;
+}
 
 body {
   margin: 0;
@@ -127,6 +130,7 @@ body {
   text-align: center;
 }
 #car-cards h1 {
+  text-align: left;
   margin-left: 2rem;
 }
 #car-cards ul {
@@ -188,6 +192,48 @@ body {
 }
 #car-details p {
  margin-left: 0.5rem;
+}
+#loginForm {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#loginForm fieldset {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+}
+
+#loginForm legend {
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+#loginForm label {
+  display: block;
+  margin-top: 10px;
+}
+
+#loginForm input {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+#loginForm button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#loginForm p, a{
+  display: inline;
 }
 
 footer {
