@@ -6,11 +6,19 @@ const accountModel = require('../models/account-model')
  *******************************************/
 async function buildLogin(req, res, next) {
     let nav = await utilities.getNav()
-    res.render('account/login', { title: 'Login', nav})
+    res.render('account/login', {
+        title: 'Login',
+        nav,
+        errors: null,
+    })
 }
 async function buildRegister(req, res, next) {
     let nav = await utilities.getNav()
-    res.render('account/register', { title: 'Register', nav})
+    res.render('account/register', {
+        title: 'Register',
+        nav,
+        errors: null,
+    })
 }
 async function registerAccount(req, res) {
     let nav = await utilities.getNav()
