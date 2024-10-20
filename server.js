@@ -11,6 +11,7 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const accountRoute = require("./routes/accountRoute")
+const inventoryRoute = require("./routes/inventoryRoute")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
 const session = require("express-session")
@@ -62,6 +63,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.get("/inv/type/:classificationId", utilities.handleErrors(baseController.buildInventory))
 //Car Details Route
 app.get("/inv/details/:inventoryId", utilities.handleErrors(baseController.buildCarDetails))
+//Car Management Route
+app.use('/inv', inventoryRoute)
 //My Account Route
 app.use('/account', accountRoute)
 //File Not Found Route - must be last route in list

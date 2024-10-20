@@ -193,6 +193,18 @@ body {
 #car-details p {
  margin-left: 0.5rem;
 }
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+form label {
+    display: block;
+    margin-top: 0.8rem;
+}
+form button {
+    display: block;
+    margin-top: 0.8rem;
+}
 #loginForm {
   max-width: 400px;
   margin: 0 auto;
@@ -294,6 +306,10 @@ body {
 }
 #registrationForm p, a{
   display: inline;
+}
+
+.invalid {
+    border: 2px solid red;
 }
 
 footer {

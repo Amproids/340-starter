@@ -1,0 +1,19 @@
+<h1><%- title %></h1>
+<% messages() %>
+<form id="addClassificationForm" action="/inv/add-classification" method="post">
+    <fieldset>
+        <legend><%- title %></legend>
+        <p>Classification name cannot contain spaces or special caracters.</p>
+        <label for="classificationName">Classification Name:</label>
+        <input type="text" id="classificationName" name="classification_name" required value="<%= locals.classification_name %>">
+        <% if (locals.errors) { %>
+            <ul class="notice">
+           <% errors.array().forEach(error => { %>
+              <li><%= error.msg %></li>
+          <%  }) %>
+            </ul>
+          <% } %>
+        <button type="submit">Add Classification</button>
+    </fieldset>
+</form>
+<script src="/js/classification-validation.js"></script>
