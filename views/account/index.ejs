@@ -1,0 +1,24 @@
+<!-- views/account/index.ejs -->
+
+<!-- Normal components as all the other views -->
+<header>
+    <nav>
+        <%= nav %>
+    </nav>
+</header>
+
+<main>
+    <% if (flash) { %>
+        <div class="flash-message">
+        <%= flash %>
+        </div>
+    <% } %>
+
+    <% if (errors) { %>
+        <div class="error-message">
+        <%= errors %>
+        </div>
+    <% } %>
+
+    <h1>You're logged in</h1>
+</main>
