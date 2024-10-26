@@ -96,11 +96,8 @@ async function accountLogin(req, res) {
     }
     try {
         if (await bcrypt.compare(account_password, accountData.account_password)) {
-            console.log("password checked")
             delete accountData.account_password
-            console.log("account_password deleted")
             const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
-            console.log("accessToken created")
             if(process.env.NODE_ENV === 'development') {
                 res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
             } else {
@@ -121,4 +118,12 @@ async function accountLogin(req, res) {
         throw new Error('Access Forbidden')
     }
 }
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin }
+async function buildAccount(req, res, next) {
+    let nav = await utilities.getNav()
+    res.render("account/", {
+        title: "Account",
+        nav,
+        errors: null,
+    })
+}
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin , buildAccount}

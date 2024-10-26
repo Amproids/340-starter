@@ -33,6 +33,9 @@ app.use(session({
   name: 'sessionId',
 }))
 
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
+
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -72,9 +75,6 @@ app.use('/account', accountRoute)
 app.use(async(req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
-
-app.use(cookieParser())
-app.use(utilities.checkJWTToken)
 
 /* ***********************
 * Express Error Handler
