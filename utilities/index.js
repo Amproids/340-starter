@@ -85,9 +85,7 @@ function formatNumber(number) {
 * Middleware to check token validity
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
-    console.log("checking cookies...")
     if (req.cookies.jwt) {
-        console.log("cookie found")
         jwt.verify(
         req.cookies.jwt,
         process.env.ACCESS_TOKEN_SECRET,
@@ -102,7 +100,6 @@ Util.checkJWTToken = (req, res, next) => {
             next()
         })
     } else {
-        console.log("no cookie found")
         next()
     }
 }

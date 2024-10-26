@@ -1,9 +1,15 @@
 const utilities = require('../utilities/')
-const inventoryModel = require('../models/inventory-model')
+const invModel = require('../models/inventory-model')
 
 async function buildManagement(req, res, next) {
     const nav = await utilities.getNav()
-    res.render("inv/management", {title: "Management", nav})
+    const classificationSelect = await utilities.buildClassificationList()
+    res.render("inv/management", {
+        title: "Management",
+        nav,
+        erros: null,
+        classificationSelect
+    })
 }
 async function buildAddClassification(req, res, next) {
     const nav = await utilities.getNav()
@@ -23,7 +29,7 @@ async function buildAddInventory(req, res, next) {
 async function addClassification(req, res) {
     const nav = await utilities.getNav()
     const { classification_name } = req.body
-    const result = await inventoryModel.addClassification(classification_name)
+    const result = await invModel.addClassification(classification_name)
     if (result) {
         req.flash("notice", "Classification added successfully!")
         res.redirect("/inv/")
@@ -36,7 +42,7 @@ async function addInventory(req, res) {
     let nav = await utilities.getNav()
     let classificationSelect = await utilities.buildClassificationList()
     const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
-    const invResult = await inventoryModel.addInventory(
+    const invResult = await invModel.addInventory(
         inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
     )
     if (invResult) {
@@ -56,4 +62,16 @@ async function addInventory(req, res) {
         })
     }
 }
-module.exports = { buildManagement, buildAddClassification, buildAddInventory, addClassification, addInventory }
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+async function getInventoryJSON (req, res, next) {
+    const classification_id = parseInt(req.params.classification_id)
+    const invData = await invModel.getInventoryByClassificationId(classification_id)
+    if (invData[0].inv_id) {
+      return res.json(invData)
+    } else {
+      next(new Error("No data returned"))
+    }
+  }
+module.exports = { buildManagement, buildAddClassification, buildAddInventory, addClassification, addInventory , getInventoryJSON}

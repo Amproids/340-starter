@@ -22,4 +22,5 @@ router.post(
     regValidate.checkInventoryData,
     utilities.handleErrors(inventoryController.addInventory)
 )
+router.get("/getInventory/:classification_id", utilities.handleErrors(inventoryController.getInventoryJSON))
 module.exports = router;
