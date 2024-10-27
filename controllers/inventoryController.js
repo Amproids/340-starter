@@ -77,12 +77,24 @@ async function getInventoryJSON (req, res, next) {
 async function buildUpdateInventory(req, res, next) {
     inv_id = parseInt(req.params.inventory_id)
     const nav = await utilities.getNav()
-    const classificationSelect = await utilities.buildClassificationList()
+    const inv_data = await invModel.getCarDetails(inv_id)
+    const classificationSelect = await utilities.buildClassificationList(inv_data.rows[0].classification_id)
+    console.log(inv_data)
     res.render("inv/update-inventory", {
         title: "Update Inventory",
         nav,
         classificationSelect,
         errors: null,
+        inv_make: inv_data.rows[0].inv_make,
+        inv_model: inv_data.rows[0].inv_model,
+        inv_year: inv_data.rows[0].inv_year,
+        inv_description: inv_data.rows[0].inv_description,
+        inv_image: inv_data.rows[0].inv_image,
+        inv_thumbnail: inv_data.rows[0].inv_thumbnail,
+        inv_price: inv_data.rows[0].inv_price,
+        inv_miles: inv_data.rows[0].inv_miles,
+        inv_color: inv_data.rows[0].inv_color,
+        classification_name: inv_data.rows[0].classification_id
     })
 }
 module.exports = {
