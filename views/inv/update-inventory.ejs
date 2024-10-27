@@ -6,7 +6,7 @@
 <%  }) %>
   </ul>
 <% } %>
-<form id="updateInventoryForm" action="/inv/update-inventory" method="post">
+<form id="updateInventoryForm" action="/inv/update/<%= locals.inv_id %>" method="post">
     <fieldset>
         <legend>Update New Vehicle</legend>
         

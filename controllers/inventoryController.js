@@ -1,5 +1,6 @@
 const utilities = require('../utilities/')
 const invModel = require('../models/inventory-model')
+const Update = require('update')
 
 async function buildManagement(req, res, next) {
     const nav = await utilities.getNav()
@@ -75,16 +76,16 @@ async function getInventoryJSON (req, res, next) {
     }
   }
 async function buildUpdateInventory(req, res, next) {
-    inv_id = parseInt(req.params.inventory_id)
+    const inv_id = parseInt(req.params.inventory_id)
     const nav = await utilities.getNav()
     const inv_data = await invModel.getCarDetails(inv_id)
     const classificationSelect = await utilities.buildClassificationList(inv_data.rows[0].classification_id)
-    console.log(inv_data)
     res.render("inv/update-inventory", {
         title: "Update Inventory",
         nav,
         classificationSelect,
         errors: null,
+        inv_id: inv_data.rows[0].inv_id,
         inv_make: inv_data.rows[0].inv_make,
         inv_model: inv_data.rows[0].inv_model,
         inv_year: inv_data.rows[0].inv_year,
@@ -97,6 +98,32 @@ async function buildUpdateInventory(req, res, next) {
         classification_name: inv_data.rows[0].classification_id
     })
 }
+async function updateInventory(req, res) {
+    const inv_id = parseInt(req.params.inventory_id)
+    let nav = await utilities.getNav()
+    let classificationSelect = await utilities.buildClassificationList()
+    const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+    console.log('inv_id', inv_id)
+    const invResult = await invModel.updateInventory(
+        inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
+    )
+    if (invResult) {
+        req.flash(
+            "notice",
+            `The ${inv_make} ${inv_model} was successfully updated.`
+        )
+        res.redirect("/inv/")
+    } else {
+        req.flash("notice", "Sorry, the update failed.")
+        res.status(501).render("inv/update-inventory", {
+            title: "Update Inventory",
+            nav,
+            classificationSelect: await utilities.buildClassificationList(classification_id),
+            errors: null,
+            inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
+        })
+    }
+}
 module.exports = {
     buildManagement,
     buildAddClassification,
@@ -104,5 +131,6 @@ module.exports = {
     addClassification,
     addInventory, 
     getInventoryJSON,
-    buildUpdateInventory
+    buildUpdateInventory,
+    updateInventory
 }
