@@ -68,8 +68,8 @@ async function addInventory(req, res) {
 async function getInventoryJSON (req, res, next) {
     const classification_id = parseInt(req.params.classification_id)
     const invData = await invModel.getInventory(classification_id)
-    if (invData[0].inv_id) {
-      return res.json(invData)
+    if (invData.rows) {
+      return res.json(invData.rows)
     } else {
       next(new Error("No data returned"))
     }
