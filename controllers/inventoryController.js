@@ -1,6 +1,5 @@
 const utilities = require('../utilities/')
 const invModel = require('../models/inventory-model')
-const Update = require('update')
 
 async function buildManagement(req, res, next) {
     const nav = await utilities.getNav()
