@@ -123,6 +123,39 @@ async function updateInventory(req, res) {
         })
     }
 }
+/* ***************************
+ *  Build delete confirmation view
+ * ************************** */
+async function buildDeleteConfirmation(req, res, next) {
+    const inv_id = parseInt(req.params.inventory_id)
+    let nav = await utilities.getNav()
+    const itemData = await invModel.getCarDetails(inv_id)
+    const itemName = `${itemData.rows[0].inv_make} ${itemData.rows[0].inv_model}`
+    res.render("./inv/delete-confirm", {
+        title: "Delete " + itemName,
+        nav,
+        errors: null,
+        inv_id: itemData.rows[0].inv_id,
+        inv_make: itemData.rows[0].inv_make,
+        inv_model: itemData.rows[0].inv_model,
+        inv_year: itemData.rows[0].inv_year,
+        inv_price: itemData.rows[0].inv_price,
+    })
+}
+/* ***************************
+ *  Process delete inventory request
+ * ************************** */
+async function deleteInventoryItem(req, res, next) {
+    const inv_id = parseInt(req.params.inventory_id)
+    const deleteResult = await invModel.deleteInventoryItem(inv_id)
+    if (deleteResult) {
+        req.flash("notice", "The vehicle was successfully deleted.")
+        res.redirect("/inv/")
+    } else {
+        req.flash("notice", "Sorry, the delete failed.")
+        res.redirect("/inv/delete/" + inv_id)
+    }
+}
 module.exports = {
     buildManagement,
     buildAddClassification,
@@ -131,5 +164,7 @@ module.exports = {
     addInventory, 
     getInventoryJSON,
     buildUpdateInventory,
-    updateInventory
+    updateInventory,
+    buildDeleteConfirmation,
+    deleteInventoryItem
 }
