@@ -74,4 +74,23 @@ async function getInventoryJSON (req, res, next) {
       next(new Error("No data returned"))
     }
   }
-module.exports = { buildManagement, buildAddClassification, buildAddInventory, addClassification, addInventory , getInventoryJSON}
+async function buildUpdateInventory(req, res, next) {
+    inv_id = parseInt(req.params.inventory_id)
+    const nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()
+    res.render("inv/update-inventory", {
+        title: "Update Inventory",
+        nav,
+        classificationSelect,
+        errors: null,
+    })
+}
+module.exports = {
+    buildManagement,
+    buildAddClassification,
+    buildAddInventory,
+    addClassification,
+    addInventory, 
+    getInventoryJSON,
+    buildUpdateInventory
+}
