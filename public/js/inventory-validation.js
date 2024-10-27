@@ -1,7 +1,7 @@
 "use strict"
 
 // Get all form elements
-const form = document.querySelector("#addInventoryForm")
+const form = document.querySelector("#addInventoryForm") || dosument.querySelector("#updateInventoryForm")
 const make = document.querySelector("#invMake")
 const model = document.querySelector("#invModel")
 const year = document.querySelector("#invYear")
