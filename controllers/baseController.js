@@ -15,7 +15,6 @@ baseController.buildCarDetails = async function(req, res){
     const inventoryId = req.params.inventoryId  // Get classification ID from URL
     const nav = await utilities.getNav()
     const details = await utilities.getCarDetails(inventoryId)
-    console.log(details)
     res.render("details", {title: "Details", nav, details})
 }
 baseController.triggerError = async function(req, res, next) {

@@ -117,6 +117,23 @@ Util.checkLogin = (req, res, next) => {
     }
 }
 /* ****************************************
+ * Middleware to check for Employee or Admin roles
+ **************************************** */
+Util.checkAdminEmployee = (req, res, next) => {
+    if (res.locals.loggedin) {
+        const accessLevel = res.locals.accountData.account_type
+        if (accessLevel === "Admin" || accessLevel === "Employee"){
+            next()
+        } else {
+            req.flash("notice", "You do not have permission to access this page.")
+            return res.redirect("/account/login")
+        }
+    } else {
+        req.flash("notice", "Please log in.")
+        return res.redirect("/account/login")
+    }
+}
+/* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for
  * General Error Handling

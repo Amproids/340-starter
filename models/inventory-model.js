@@ -107,7 +107,8 @@ async function deleteInventoryItem(inv_id) {
         throw error
     }
 }
-module.exports = {getClassifications,
+module.exports = {
+    getClassifications,
     getClassificationName,
     getInventory,
     getCarDetails,
