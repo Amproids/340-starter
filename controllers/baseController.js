@@ -19,6 +19,6 @@ baseController.buildCarDetails = async function(req, res){
 }
 baseController.triggerError = async function(req, res, next) {
     throw new Error("Intentional 500 Error");
-  }
+}
 
 module.exports = baseController
