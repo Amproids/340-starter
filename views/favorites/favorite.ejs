@@ -10,13 +10,15 @@
         <div class="favorites-grid">
             <% favorites.forEach(favorite => { %>
                 <div class="favorite-card" data-inv-id="<%= favorite.inv_id %>">
-                    <img src="<%= favorite.inv_thumbnail %>" 
-                         alt="Image of <%= favorite.inv_make %> <%= favorite.inv_model %>">
+                    <a href="/inv/details/<%= favorite.inv_id %>" class="view-details">
+                        <img src="<%= favorite.inv_thumbnail %>" alt="Image of <%= favorite.inv_make %> <%= favorite.inv_model %>">
+                    </a>
                     <div class="favorite-details">
-                        <h2><%= favorite.inv_year %> <%= favorite.inv_make %> <%= favorite.inv_model %></h2>
-                        <p class="favorite-price">$<%= new Intl.NumberFormat().format(favorite.inv_price) %></p>
+                        <a href="/inv/details/<%= favorite.inv_id %>" class="view-details">
+                            <h2><%= favorite.inv_year %> <%= favorite.inv_make %> <%= favorite.inv_model %></h2>
+                            <p class="favorite-price">$<%= new Intl.NumberFormat().format(favorite.inv_price) %></p>
+                        </a>
                         <div class="favorite-actions">
-                            <a href="/inv/detail/<%= favorite.inv_id %>" class="view-details">View Details</a>
                             <button class="remove-favorite" 
                                     data-inv-id="<%= favorite.inv_id %>"
                                     title="Remove from favorites">

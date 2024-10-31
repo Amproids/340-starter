@@ -5,9 +5,6 @@ const utilities = require("../utilities")
 const validate = require("../utilities/favorites-validation")
 const rateLimit = require('express-rate-limit')
 
-// Apply rate limiting
-router.use(rateLimit(validate.rateLimiter))
-
 // Route to build favorites view (protected)
 router.get("/",
     utilities.checkLogin,

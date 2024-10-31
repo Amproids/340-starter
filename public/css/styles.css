@@ -411,7 +411,9 @@ li:hover .favorite-btn,
     right: 10px;
     z-index: 2;
 }
-
+button.remove-favorite {
+    margin:auto; /* Remove
+}
 /* No Favorites State */
 .no-favorites {
     text-align: center;

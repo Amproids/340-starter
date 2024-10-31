@@ -7,10 +7,13 @@ require("dotenv").config()
 /* ************************
  * Constructs the nav HTML unordered list
  * ************************ */
+// utilities/index.js - Updated getNav function
 Util.getNav = async function (req, res, next) {
     let data = await invModel.getClassifications()
     let list = "<ul>"
     list += '<li><a href="/" title="Home page">Home</a></li>'
+    
+    // Add classifications
     data.rows.forEach((row) => {
         list += '<li>'
         list +=
@@ -23,6 +26,7 @@ Util.getNav = async function (req, res, next) {
             '</a>'
         list += '</li>'
     })
+    list += '<li><a href="/favorites" title="View your favorite vehicles">Favorites</a></li>'
     list += '</ul>'
     return list
 }
