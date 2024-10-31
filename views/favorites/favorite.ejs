@@ -1,0 +1,36 @@
+<%# views/favorites/favorite.ejs %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } %>
+
+<%- messages() %>
+
+<div id="favorites-wrapper">
+    <% if (favorites && favorites.length > 0) { %>
+        <div class="favorites-grid">
+            <% favorites.forEach(favorite => { %>
+                <div class="favorite-card" data-inv-id="<%= favorite.inv_id %>">
+                    <img src="<%= favorite.inv_thumbnail %>" 
+                         alt="Image of <%= favorite.inv_make %> <%= favorite.inv_model %>">
+                    <div class="favorite-details">
+                        <h2><%= favorite.inv_year %> <%= favorite.inv_make %> <%= favorite.inv_model %></h2>
+                        <p class="favorite-price">$<%= new Intl.NumberFormat().format(favorite.inv_price) %></p>
+                        <div class="favorite-actions">
+                            <a href="/inv/detail/<%= favorite.inv_id %>" class="view-details">View Details</a>
+                            <button class="remove-favorite" 
+                                    data-inv-id="<%= favorite.inv_id %>"
+                                    title="Remove from favorites">
+                                ♥ Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="no-favorites">
+            <p>You haven't added any vehicles to your favorites yet.</p>
+            <a href="/inv" class="browse-inventory">Browse Inventory</a>
+        </div>
+    <% } %>
+</div>

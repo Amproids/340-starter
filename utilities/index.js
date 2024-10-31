@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const favoritesModel = require("../models/favorites-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -25,19 +26,57 @@ Util.getNav = async function (req, res, next) {
     list += '</ul>'
     return list
 }
-Util.getInv = async function (classificationId, req, res, next) {
-    let data = await invModel.getInventory(classificationId)
-    let classification = await invModel.getClassificationName(classificationId)
-    let inventoryHTML = `<h1>${classification.rows[0].classification_name}</h1><ul>`
-    data.rows.forEach((row) => {
-        inventoryHTML += `<li><a href='/inv/details/${row.inv_id}'>`
-        inventoryHTML += `<img src='${row.inv_thumbnail}' alt='${row.inv_year} ${row.inv_make} ${row.inv_model}'><br><hr>`
-        inventoryHTML += `<p>${row.inv_make} ${row.inv_model}<br>`
-        inventoryHTML += `$${formatNumber(row.inv_price)}</p>`
-        inventoryHTML += '</a></li>' 
-    })
-    inventoryHTML += '</ul>'
-    return inventoryHTML
+
+Util.getInv = async function (classificationId, res) {
+    try {
+        const data = await invModel.getInventory(classificationId)
+        const classification = await invModel.getClassificationName(classificationId)
+        
+        // Check if we have valid classification data
+        if (!classification?.rows?.[0]?.classification_name) {
+            throw new Error("Classification not found")
+        }
+
+        // Add null check for res.locals
+        const account_id = res?.locals?.accountData?.account_id || null
+        
+        let inventoryHTML = `<h1>${classification.rows[0].classification_name}</h1><ul>`
+        
+        // Check if we have valid inventory data
+        if (data?.rows?.length > 0) {
+            // Use for...of instead of forEach for async operations
+            for (const vehicle of data.rows) {
+                let favoriteButton = ''
+                if (typeof Util.buildFavoriteButton === 'function') {
+                    favoriteButton = await Util.buildFavoriteButton(vehicle.inv_id, account_id)
+                }
+
+                inventoryHTML += '<li>'
+                inventoryHTML += `<a href='/inv/details/${vehicle.inv_id}'>`
+                inventoryHTML += `<img src='${vehicle.inv_thumbnail}' 
+                    alt='${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}'><br><hr>`
+                inventoryHTML += `<p>${vehicle.inv_make} ${vehicle.inv_model}<br>`
+                inventoryHTML += `$${new Intl.NumberFormat().format(vehicle.inv_price)}</p>`
+                inventoryHTML += '</a>'
+                
+                if (favoriteButton) {
+                    inventoryHTML += `<div class="favorite-container">`
+                    inventoryHTML += favoriteButton
+                    inventoryHTML += `</div>`
+                }
+                
+                inventoryHTML += '</li>'
+            }
+        } else {
+            inventoryHTML += '<li class="notice">No vehicles found.</li>'
+        }
+        
+        inventoryHTML += '</ul>'
+        return inventoryHTML
+    } catch (error) {
+        console.error("getInv error: ", error)
+        return `<p class="notice">Sorry, there was an error processing your request. Please try again.</p>`
+    }
 }
 Util.getCarDetails = async function (inventoryId, req, res, next) {
     let data = await invModel.getCarDetails(inventoryId)
@@ -131,6 +170,43 @@ Util.checkAdminEmployee = (req, res, next) => {
     } else {
         req.flash("notice", "Please log in.")
         return res.redirect("/account/login")
+    }
+}
+/* ************************
+ * Build the favorites button HTML
+ * *********************** */
+Util.buildFavoriteButton = async function(inv_id, account_id = null) {
+    if (!account_id) {
+        return `
+            <button 
+                class="favorite-btn" 
+                data-inv-id="${inv_id}" 
+                data-action="login"
+                title="Login to favorite this vehicle">
+                ♡ Favorite
+            </button>
+        `
+    }
+    
+    try {
+        console.log("Building the favorites button")
+        const isFavorited = await favoritesModel.checkFavorite(account_id, inv_id)
+        const buttonClass = isFavorited ? 'favorite-btn favorited' : 'favorite-btn'
+        const action = isFavorited ? 'remove' : 'add'
+        const text = isFavorited ? '♥ Favorited' : '♡ Favorite'
+        
+        return `
+            <button 
+                class="${buttonClass}" 
+                data-inv-id="${inv_id}" 
+                data-action="${action}"
+                title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}">
+                ${text}
+            </button>
+        `
+    } catch (error) {
+        console.error("Error building favorite button:", error)
+        return ''
     }
 }
 /* ****************************************

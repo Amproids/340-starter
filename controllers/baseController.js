@@ -8,7 +8,7 @@ baseController.buildHome = async function(req, res){
 baseController.buildInventory = async function(req, res){
     const classificationId = req.params.classificationId  // Get classification ID from URL
     const nav = await utilities.getNav()
-    const inv = await utilities.getInv(classificationId)
+    const inv = await utilities.getInv(classificationId, res)
     res.render("inventory", {title: "Inventory", nav, inv})
 }
 baseController.buildCarDetails = async function(req, res){
