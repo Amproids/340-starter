@@ -412,7 +412,7 @@ li:hover .favorite-btn,
     z-index: 2;
 }
 button.remove-favorite {
-    margin:auto; /* Remove
+    margin:auto;
 }
 /* No Favorites State */
 .no-favorites {
@@ -556,7 +556,6 @@ button.remove-favorite {
 .remove-favorite:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    pointer-events: none;
 }
 
 /* Improve notification positioning */
